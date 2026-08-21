@@ -1,0 +1,4 @@
+admission_no,first_name,last_name,class_level,school_name,target_exam_year,date_of_birth,gender,phone,email,address,source,batch,guardian_name,guardian_relation,guardian_phone,guardian_alternate_phone,status
+ADM-001,Aarav,Sharma,XII,Kendriya Vidyalaya,2027,2009-05-14,male,9876500011,aarav@example.com,"Civil Lines, Kannauj",Referral,,Rakesh Sharma,father,9876500012,9876500013,active
+ADM-002,Riya,Verma,X,St Marys School,,2011-08-22,female,9876500021,,Near Bus Stand,Pamphlet,,Sunita Verma,mother,9876500022,,active
+ADM-003,Mohit,Yadav,Dropper,Private Tutor,2027,2007-01-10,male,9876500031,mohit@example.com,Village Road,Walk-in,,Suresh Yadav,father,9876500032,,active

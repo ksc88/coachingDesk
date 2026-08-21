@@ -1,0 +1,66 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_KEY: base64:2fl+K9k0dX0vFq1nR3yQ7oP8sT6uV1wX4yZ0aB3cD5e=
+      APP_URL: http://localhost:8080
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: coaching
+      DB_USERNAME: coaching
+      DB_PASSWORD: secret
+      REDIS_HOST: redis
+      QUEUE_CONNECTION: redis
+      CACHE_STORE: redis
+    volumes:
+      - ./storage:/var/www/html/storage
+    depends_on:
+      - mysql
+      - redis
+
+  queue:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: php artisan queue:work --sleep=1 --tries=3
+    environment:
+      APP_ENV: local
+      APP_KEY: base64:2fl+K9k0dX0vFq1nR3yQ7oP8sT6uV1wX4yZ0aB3cD5e=
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: coaching
+      DB_USERNAME: coaching
+      DB_PASSWORD: secret
+      REDIS_HOST: redis
+      QUEUE_CONNECTION: redis
+    depends_on:
+      - mysql
+      - redis
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: coaching
+      MYSQL_USER: coaching
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  mysql_data:
